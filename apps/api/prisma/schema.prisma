@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  prompt    String
+  runs      ModelRun[]
+}
+
+model ModelRun {
+  id               String   @id @default(cuid())
+  sessionId        String
+  session          Session  @relation(fields: [sessionId], references: [id])
+  provider         String
+  model            String
+  status           String   // typing | streaming | complete | error
+  responseText     String   @default("")
+  errorMessage     String?
+  startedAt        DateTime
+  completedAt      DateTime?
+  promptTokens     Int      @default(0)
+  completionTokens Int      @default(0)
+  latencyMs        Int      @default(0)
+  costUsd          Float    @default(0)
+}
