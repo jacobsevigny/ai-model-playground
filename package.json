@@ -2,10 +2,6 @@
   "name": "ai-model-playground",
   "private": true,
   "version": "0.0.1",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev:web": "pnpm --filter web dev",
     "dev:api": "pnpm --filter api start:dev"
